@@ -57,7 +57,7 @@ Functions always break after the opening curly brace no matter what,
 so the array breaks as well for consistent formatting. See the
 implementation of `ArrayExpression` for an example.
 
-### conditionalGroup
+### `conditionalGroup`
 
 This should be used as **last resort** as it triggers an exponential complexity when nested. This will try to print the first argument, if it fit use it, otherwise go to the next one and so on.
 
@@ -65,7 +65,7 @@ This should be used as **last resort** as it triggers an exponential complexity 
 conditionalGroup([a, b, c])
 ```
 
-### fill
+### `fill`
 
 This is an alternative type of group which behave like text layout: it's going to add a break whenever the next element doesn't fit in the line anymore. The difference with a typical group is that it's not going to break all the separators, just the ones that are at the end of lines.
 
@@ -74,7 +74,7 @@ fill(["I", line, "love", line, "prettier"])
 ```
 
 
-### ifBreak
+### `ifBreak`
 
 Prints something if the current group breaks and something else if it doesn't.
 
@@ -162,7 +162,7 @@ and **not**
 
 Increase the level of indentation.
 
-### align
+### `align`
 
 This is similar to indent but it increases the level of indentation by a fixed number. When using tabs, it's going to print spaces. You should prefer using `indent` whenever possible.
 

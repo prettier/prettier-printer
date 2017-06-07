@@ -100,12 +100,21 @@ export interface Cursor {
 
 /**
  * Combines an array of parts into a single one.
+ * 
+ * ```ts
+ * concat(["hello", "world"])
+ * ```
  */
 export declare function concat(parts: Array<Doc>): Doc
 
 /**
  * Increase the level of indentation by given `n` number
  * for the given `contents`.
+ * 
+ * ```ts
+ * indent("Hello")
+ * indent(concat(["hello", indent("world")]))
+ * ```
  */
 export declare function indent(contents: Doc): Doc
 
@@ -113,6 +122,10 @@ export declare function indent(contents: Doc): Doc
  * This is similar to `indent` but it increases the level of indentation
  * for the given `content` by a given `n` fixed number. When using tabs, it's
  * going to print spaces. You should prefer using `indent` whenever possible.
+ * 
+ * ```ts
+ * align(tabWidth, concat(["hello", line, "world"]))
+ * ```
  */
 export declare function align(n: number, contents: Doc): Doc
 
@@ -146,26 +159,141 @@ export interface GroupSettings {
  * will always break as well:
  * 
  * ```ts
+ * [
+ *   1,
+ *   function() {
+ *     return 2
+ *   },
+ *   3
+ * ]
  * ```
+ * 
+ * In prettier functions always break after the opening curly brace no matter
+ * what, so the array breaks as well for consistent formatting. See the prettier
+ * implementation of `ArrayExpression` for an example.
+ * 
+ * ```ts
+ * group(
+ *   concat([
+ *     "[",
+ *     indent(
+ *       concat([
+ *         line,
+ *         join(
+ *           concat([",", line]),
+ *           path.map(print, "elements")
+ *         )
+ *       ])
+ *     ),
+ *     line,
+ *     "]"
+ *   ])
+ * )
  */
 export declare function group(contents: Doc, settings?: GroupSettings): Doc
+
+/**
+ * This should be used as **last resort** as it triggers an exponential
+ * complexity when nested. This will try to print the first option, if it
+ * fits use it, otherwise try next one and so on.
+ */
 export declare function conditionalGroup(
-  states: Array<Doc>,
+  options: Array<Doc>,
   settings?: GroupSettings
 ): Doc
 
+/**
+ * This is an alternative type of group which behave like text layout: it's
+ * going to add a break whenever the next element doesn't fit in the line
+ * anymore. The difference with a typical group is that it's not going to
+ * break all the separators, just the ones that are at the end of lines.
+ * 
+ * ```ts
+ * fill(["I", line, "love", line, "prettier"])
+ * ```
+ */
 export declare function fill(parts:Array<Doc>):Doc
 
+/**
+ * Prints `breakContents` if the current group breaks and prints `flatContents`
+ * if it doesn't.
+ * 
+ * ```ts
+ * ifBreak(";", " ")
+ * ```
+ */
 export declare function ifBreak(breakContents:Doc, flatContents:Doc):Doc
+
+
 export declare function lineSuffix(contents:Doc):Doc
 
+/**
+ * In cases where you embed code inside of templates, comments shouldn't be
+ * able to leave the code part. `lineSuffixBoundary` is an explicit marker
+ * you can use to flush code in addition to newlines.
+ * 
+ * ```ts
+ * concat(["{", lineSuffix(" // comment"), lineSuffixBoundary, "}", hardline])
+ * ```
+ * will output
+ * 
+ * ```js
+ * { // comment
+ * }
+ * ```
+ * and **not**
+ * 
+ * ```ts
+ * {} // comment
+ * ```
+ */
 export declare const lineSuffixBoundary:Doc
+
+/**
+ * Include this anywhere to force all parent groups to break. See `group` for
+ * more info. Example:
+ * 
+ * ```js
+ * group(
+ *   concat([
+ *     " ",
+ *     expr,
+ *     " ",
+ *     breakParent
+ *   ])
+ * )
+ * ```
+ */
 export declare const breakParent:Doc
 export declare const line:Doc
+
+/**
+ * Specify a line break. The difference from `line` is that if the
+ * expression fits on one line, it will be replaced with nothing.
+ */
 export declare const softline:Doc
+
+/**
+ * Line break that is **always** included in the output, no matter if the
+ * expression fits on one line or not.
+ */
 export declare const hardline:Doc
+
+/**
+ * Line break that is **always** included in the output, and don't indent
+ * the next line. Prettier uses this for template literals.
+ */
 export declare const literalline:Doc
+
+/**
+ * This is a placeholder value where the cursor is in the original input in
+ * order to find where it would be printed.
+ */
 export declare const cursor:Doc
 
+/**
+ * Join `parts` with a `separator`.
+ */
 export declare function join(seperator:Doc, parts:Array<Doc>):Doc
+
 export declare function addAlignmentToDoc(doc:Doc, size:number, tabWidth:number):Doc
