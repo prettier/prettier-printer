@@ -1,0 +1,34 @@
+{
+  "name": "prettier",
+  "version": "1.4.2",
+  "description": "Library for building and pretty printing text documents",
+  "repository": "prettier/prettier-printer",
+  "author": "James Long",
+  "license": "MIT",
+  "main": "./index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "20.0.0",
+    "jest-validate": "20.0.3",
+    "eslint": "3.19.0",
+    "eslint-plugin-prettier": "2.1.1"
+  },
+  "scripts": {
+    "test": "jest",
+    "test-integration": "jest tests_integration",
+    "lint": "eslint ."
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/tests_config/run_spec.js"
+    ],
+    "snapshotSerializers": [
+      "<rootDir>/tests_config/raw-serializer.js"
+    ],
+    "testRegex": "jsfmt\\.spec\\.js$|__tests__/.*\\.js$",
+    "testPathIgnorePatterns": [
+      "tests/new_react",
+      "tests/more_react"
+    ]
+  }
+}

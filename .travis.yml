@@ -1,0 +1,13 @@
+---
+language: node_js
+node_js:
+  - 4
+  - 6
+  - stable
+cache:
+  yarn: true
+  directories:
+  - node_modules
+script:
+  - yarn lint
+  - AST_COMPARE=1 yarn test -- --runInBand
