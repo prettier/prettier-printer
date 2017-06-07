@@ -5,30 +5,26 @@
   "repository": "prettier/prettier-printer",
   "author": "James Long",
   "license": "MIT",
-  "main": "./index.js",
+  "main": "lib/index",
+  "typings": "lib/index.d.ts",
   "dependencies": {},
   "devDependencies": {
-    "jest": "20.0.0",
-    "jest-validate": "20.0.3",
+    "@types/blue-tape": "^0.1.30",
+    "blue-tape": "^1.0.0",
+    "typescript": "^2.3.4",
+    "ts-node": "^3.0.4",
+    "typedoc": "^0.7.1",
     "eslint": "3.19.0",
     "eslint-plugin-prettier": "2.1.1"
   },
   "scripts": {
-    "test": "jest",
-    "test-integration": "jest tests_integration",
-    "lint": "eslint ."
-  },
-  "jest": {
-    "setupFiles": [
-      "<rootDir>/tests_config/run_spec.js"
-    ],
-    "snapshotSerializers": [
-      "<rootDir>/tests_config/raw-serializer.js"
-    ],
-    "testRegex": "jsfmt\\.spec\\.js$|__tests__/.*\\.js$",
-    "testPathIgnorePatterns": [
-      "tests/new_react",
-      "tests/more_react"
-    ]
+    "test": "npm run test:tape",
+    "test:tape": "blue-tape -r ts-node/register test/**/*.ts",
+    "build": "npm run build:clean && npm run build:node && npm run build:docs",
+    "prepare": "npm run build:node",
+    "prepublishOnly": "npm run build && npm run test",
+    "build:node": "tsc --project tsconfig.build.json",
+    "build:docs": "typedoc --disableOutputCheck --tsconfig tsconfig.build.json --readme none --theme minimal --out ./docs ./lib",
+    "build:clean": "rm -rf lib"
   }
 }
