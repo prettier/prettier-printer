@@ -220,6 +220,22 @@ export declare function fill(parts: Array<Doc>): Doc
  */
 export declare function ifBreak(breakContents: Doc, flatContents: Doc): Doc
 
+/**
+ * This is used to implement trailing comments. In practice, it is not practical
+ * to find where the line ends and you don't want to accidentally print some
+ * code at the end of the comment. `lineSuffix` will buffer the output and
+ * flush it before any new line or `lineSuffixBoundary`.
+ * 
+ * ```ts
+ * concat(["a", lineSuffix(" // comment"), ";", hardline])
+ * ```
+ * 
+ * will output
+ * 
+ * ```ts
+ * a; // comment
+ * ```
+ */
 export declare function lineSuffix(contents: Doc): Doc
 
 /**
@@ -260,23 +276,29 @@ export declare const lineSuffixBoundary: Doc;
  * ```
  */
 export declare const breakParent: Doc;
+
+/**
+ * Line break. If a group fits on one line it prints a single space. If group
+ * does not fit it prints line break and an indentetation.
+ */
 export declare const line: Doc;
 
 /**
- * Specify a line break. The difference from `line` is that if the
- * expression fits on one line, it will be replaced with nothing.
+ * Line break. If a group fits on one line it prints nothing. If group does not
+ * fit it behaves same as `line`.
  */
 export declare const softline: Doc;
 
 /**
- * Line break that is **always** included in the output, no matter if the
- * expression fits on one line or not.
+ * Line break that is **always** behaves as if it did not fit, regardless if
+ * the group fits on one line or not.
  */
 export declare const hardline: Doc;
 
 /**
- * Line break that is **always** included in the output, and don't indent
- * the next line. Prettier uses this for template literals.
+ * Line break that is **always** behaves as if it did not fit. Unlike other
+ * lines though it does not print indetantion after line break. Prettier uses
+ * this for template literals.
  */
 export declare const literalline: Doc;
 
