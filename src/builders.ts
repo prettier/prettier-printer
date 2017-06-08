@@ -185,6 +185,7 @@ export interface GroupSettings {
  *     "]"
  *   ])
  * )
+ * ```
  */
 export declare function group(contents: Doc, settings?: GroupSettings): Doc
 
