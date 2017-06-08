@@ -1,7 +1,4 @@
-export type Doc =
-  | undefined
-  | string
-  | ComputedDoc
+export type Doc = undefined | string | ComputedDoc;
 
 export type ComputedDoc =
   | Concat
@@ -18,85 +15,84 @@ export type ComputedDoc =
   | SoftLine
   | HardLine
   | LiteralLine
-  | Cursor
+  | Cursor;
 
 export interface Concat {
-  type: "concat"
-  parts: Array<Doc>
+  type: "concat";
+  parts: Array<Doc>;
 }
 
 export interface Indent {
-  type: "indent"
-  contents: Doc
+  type: "indent";
+  contents: Doc;
 }
 
 export interface Align {
-  type: "align"
-  contents:Doc
-  n:number
+  type: "align";
+  contents: Doc;
+  n: number;
 }
 
 export interface ReseltAlign {
-  type:"align"
-  contents:Doc
-  n:null
+  type: "align";
+  contents: Doc;
+  n: null;
 }
 
-export interface Group { 
-  type: "group",
-  contents:Doc,
-  break:boolean,
-  expandedStates:Array<Doc>
+export interface Group {
+  type: "group";
+  contents: Doc;
+  break: boolean;
+  expandedStates: Array<Doc>;
 }
 
 export interface Fill {
-  type: "fill",
-  parts: Array<Doc>
+  type: "fill";
+  parts: Array<Doc>;
 }
 
 export interface IfBreak {
-  type: "if-break",
-  breakContents:Doc
-  flatContents:Doc
+  type: "if-break";
+  breakContents: Doc;
+  flatContents: Doc;
 }
 
 export interface LineSuffix {
-  type: "line-suffix",
-  contents:Doc
+  type: "line-suffix";
+  contents: Doc;
 }
 
 export interface LineSuffixBoundary {
-  type: "line-suffix-boundary"
+  type: "line-suffix-boundary";
 }
 
 export interface BreakParent {
-  type: "break-parent"
+  type: "break-parent";
 }
 
 export interface Line {
-  type: "line"
-  kind: "regular"
+  type: "line";
+  kind: "regular";
 }
 
 export interface SoftLine {
-  type: "line"
-  kind: "soft"
+  type: "line";
+  kind: "soft";
 }
 
 export interface HardLine {
-  type: "line"
-  kind: "hard"
+  type: "line";
+  kind: "hard";
 }
 
 export interface LiteralLine {
-  type: "line"
-  kind: "literal"
+  type: "line";
+  kind: "literal";
 }
 
 export interface Cursor {
-  type: "cursor"
+  type: "cursor";
 }
-
 
 /**
  * Combines an array of parts into a single one.
@@ -130,8 +126,8 @@ export declare function indent(contents: Doc): Doc
 export declare function align(n: number, contents: Doc): Doc
 
 export interface GroupSettings {
-  shoudBreak?: boolean
-  expandedStates?: Array<Doc>
+  shoudBreak?: boolean;
+  expandedStates?: Array<Doc>;
 }
 
 /**
@@ -212,7 +208,7 @@ export declare function conditionalGroup(
  * fill(["I", line, "love", line, "prettier"])
  * ```
  */
-export declare function fill(parts:Array<Doc>):Doc
+export declare function fill(parts: Array<Doc>): Doc
 
 /**
  * Prints `breakContents` if the current group breaks and prints `flatContents`
@@ -222,10 +218,9 @@ export declare function fill(parts:Array<Doc>):Doc
  * ifBreak(";", " ")
  * ```
  */
-export declare function ifBreak(breakContents:Doc, flatContents:Doc):Doc
+export declare function ifBreak(breakContents: Doc, flatContents: Doc): Doc
 
-
-export declare function lineSuffix(contents:Doc):Doc
+export declare function lineSuffix(contents: Doc): Doc
 
 /**
  * In cases where you embed code inside of templates, comments shouldn't be
@@ -247,7 +242,7 @@ export declare function lineSuffix(contents:Doc):Doc
  * {} // comment
  * ```
  */
-export declare const lineSuffixBoundary:Doc
+export declare const lineSuffixBoundary: Doc;
 
 /**
  * Include this anywhere to force all parent groups to break. See `group` for
@@ -264,36 +259,40 @@ export declare const lineSuffixBoundary:Doc
  * )
  * ```
  */
-export declare const breakParent:Doc
-export declare const line:Doc
+export declare const breakParent: Doc;
+export declare const line: Doc;
 
 /**
  * Specify a line break. The difference from `line` is that if the
  * expression fits on one line, it will be replaced with nothing.
  */
-export declare const softline:Doc
+export declare const softline: Doc;
 
 /**
  * Line break that is **always** included in the output, no matter if the
  * expression fits on one line or not.
  */
-export declare const hardline:Doc
+export declare const hardline: Doc;
 
 /**
  * Line break that is **always** included in the output, and don't indent
  * the next line. Prettier uses this for template literals.
  */
-export declare const literalline:Doc
+export declare const literalline: Doc;
 
 /**
  * This is a placeholder value where the cursor is in the original input in
  * order to find where it would be printed.
  */
-export declare const cursor:Doc
+export declare const cursor: Doc;
 
 /**
  * Join `parts` with a `separator`.
  */
-export declare function join(seperator:Doc, parts:Array<Doc>):Doc
+export declare function join(seperator: Doc, parts: Array<Doc>): Doc
 
-export declare function addAlignmentToDoc(doc:Doc, size:number, tabWidth:number):Doc
+export declare function addAlignmentToDoc(
+  doc: Doc,
+  size: number,
+  tabWidth: number
+): Doc

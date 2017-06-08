@@ -1,5 +1,3 @@
-"use strict"
-
 export {
   concat,
   join,
@@ -18,11 +16,9 @@ export {
   indent,
   align,
   addAlignmentToDoc
-} from "../src/builders"
+} from "../src/builders";
 
-export {
-  printDocToString
-} from "../src/printer"
+export { printDocToString } from "../src/printer";
 
 export {
   isEmpty,
@@ -31,8 +27,6 @@ export {
   traverseDoc,
   mapDoc,
   propagateBreaks
-} from "../src/utils"
+} from "../src/utils";
 
-export {
-  printDocToDebug
-} from "../src/debug"
+export { printDocToDebug } from "../src/debug";

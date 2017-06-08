@@ -11,13 +11,15 @@
   "devDependencies": {
     "@types/blue-tape": "^0.1.30",
     "blue-tape": "^1.0.0",
-    "typescript": "^2.3.4",
+    "prettier": "1.4.4",
     "ts-node": "^3.0.4",
     "typedoc": "^0.7.1",
-    "eslint": "3.19.0",
-    "eslint-plugin-prettier": "2.1.1"
+    "typescript": "^2.3.4"
   },
   "scripts": {
+    "prettier:ts": "prettier src/**/*.ts --parser typescript --write",
+    "prettier:js": "prettier src/**/*.js --write",
+    "prettier": "npm run prettier:ts && npm run prettier:js",
     "test": "npm run test:tape",
     "test:tape": "blue-tape -r ts-node/register test/**/*.ts",
     "build": "npm run build:clean && npm run build:node && npm run build:docs",

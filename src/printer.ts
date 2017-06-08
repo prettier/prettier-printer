@@ -1,8 +1,8 @@
-import { Doc } from "./builders"
+import { Doc } from "./builders";
 
 export interface Options {
-  printWidth: number
-  newLine?: string
+  printWidth: number;
+  newLine?: string;
 }
 
 /**
